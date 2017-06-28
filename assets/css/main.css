@@ -2731,6 +2731,9 @@
 			padding-left: 0;
 			display: inline-block;
 		}
+		ul.actions.intensidad {
+			margin-left: 40px;
+		}
 		ul.actions h3 {
 			text-align: center;
 		}
@@ -3241,12 +3244,19 @@
 			padding: 5em 5em 3em 5em ;
 			max-width: 100%;
 			width: 75em;
+			    
+		}
+		.inner.presentacion{
+			padding-top: 10vw;
 		}
 
 			@media screen and (max-width: 1680px) {
 
 				.wrapper > .inner {
 					padding: 4em 4em 2em 4em ;
+					    
+				}.inner.presentacion {
+				    padding-top: 10vw;
 				}
 
 			}
@@ -3495,6 +3505,8 @@
 	#navCam{
 		position: fixed;
 		top: 50px;
+		width: 108%;
+    	margin-top: 2%;
 	}
 	#sidebar + #wrapper {
 		margin-left: 25em;
@@ -3519,6 +3531,7 @@
 
 	#header + #wrapper > .wrapper > .inner {
 		margin: 0 auto;
+
 	}
 
 /* Footer */
@@ -4023,6 +4036,11 @@
 
 #nombreSensor{
 	font-family: FuturaMedium;
+	font-size: 2em;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 44px;
 }
 #controlLuminaria{
 	margin-top: 40px;

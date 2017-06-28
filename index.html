@@ -22,8 +22,9 @@
 			<section id="sidebar">
 				<div class="inner">
 					<nav id="navCam">
-						<iframe width="500" height="300" src="https://www.youtube.com/embed/ganKJdUlcPI?autoplay=true" frameborder="0" allowfullscreen></iframe>
-						<br><br>
+						<!--<iframe width="500" height="300" src="https://www.youtube.com/embed/ganKJdUlcPI?autoplay=true" frameborder="0" allowfullscreen></iframe>
+						<br><br>-->
+						<h1 id="nombreSensor">FUTURE <span>LDZ Inteligente</span></h1>
 						<ul>
 							<li><a href="#intro">Sensores</a></li>
 							<li><a href="#one">Controles</a></li>
@@ -39,8 +40,7 @@
 
 				<!-- Intro -->
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
-						<div class="inner">
-							<h1 id="nombreSensor">FUTURE <span>LDZ Inteligente</span></h1>
+						<div class="inner presentacion">
 							<p>&nbsp;</p>
 							<div class="sensores">
 
@@ -120,7 +120,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12 videoMobile">
-								<iframe width="310" height="300" src="https://www.youtube.com/embed/ganKJdUlcPI?autoplay=true" frameborder="0" allowfullscreen></iframe>
+								<!--<iframe width="310" height="300" src="https://www.youtube.com/embed/ganKJdUlcPI?autoplay=true" frameborder="0" allowfullscreen></iframe> -->
 							</div>
 						</div>
 
@@ -197,9 +197,26 @@
 										</li>
 										
 									</ul>
+									<ul class="actions intensidad">
+										<h3>Intensidad</h3>
+										<li>
+											<a id="aumentar" href="javascript:void(0)" class="button tooltip">
+												<span class="tooltiptext">Aumentar intensidad</span>
+												<i class="fa fa-plus-circle fa-5x" aria-hidden="true"></i>
+											</a>
+										</li>
+										<li>
+											<a id="disminuir" href="javascript:void(0)" class="button tooltip">
+												<span class="tooltiptext">Disminuir intensidad</span>
+												<i class="fa fa-minus-circle fa-5x" aria-hidden="true"></i>
+											</a>
+										</li>
+										
+									</ul>
 									<h3><i class="fa fa-map-marker" aria-hidden="true"></i> Ubicación de Luminaria</h3>
 									<div class="mapaUbicacion">
-										<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.7422024440725!2d-58.433345185148184!3d-34.5853890804642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb58f18dfdcf9%3A0x342c37313d9d22f5!2sGodoy+Cruz+%26+Costa+Rica%2C+Buenos+Aires!5e0!3m2!1ses-419!2sar!4v1495887374571" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+										<!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.7422024440725!2d-58.433345185148184!3d-34.5853890804642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb58f18dfdcf9%3A0x342c37313d9d22f5!2sGodoy+Cruz+%26+Costa+Rica%2C+Buenos+Aires!5e0!3m2!1ses-419!2sar!4v1495887374571" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+										<img src="images/mapamock.jpg">
 									</div>
 									
 								</div>
@@ -312,7 +329,7 @@
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			<script src="assets/js/jquery-ui.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
@@ -320,10 +337,14 @@
 			<script type="text/javascript">
 				$(document).ready(function(){ 
 
+					/**** Definir HOST ****/
+					var host = "http://demo-bsas.ddns.net:5000";
 
+
+					/*** Lecturas iniciales humedad y  temperatura ***/
 					cont = 0;
 					$.ajax({
-					  url: "http://demo-bsas.ddns.net:5000/api/lecturas/temperatura",
+					  url: host + "/api/lecturas/temperatura",
 					  context: document.body
 					}).done(function(data) {
 						$(data.datos).each(function(i,v){
@@ -331,11 +352,11 @@
 							current = data.datos[i];
 							console.log(cont);
 							console.log(data.datos["valor"]);
-							$(".temperatura span").html(data.datos["valor"])
+							$(".temperatura span").html(data.datos["valor"]);
 						});
 					});
 					$.ajax({
-					  url: "http://demo-bsas.ddns.net:5000/api/lecturas/humedad",
+					  url: host + "/api/lecturas/humedad",
 					  context: document.body
 					}).done(function(data) {
 						$(data.datos).each(function(i,v){
@@ -348,20 +369,34 @@
 						});
 					});
 
-					$("ul.mover li").click(function(){
-						
-						var direccion = $(this).attr("class"); 
-						moverCamara(direccion);
-					});
+					
 
+					/**** Alerta *****/
 					$("#alerta").click(function(){
 						
 						$.ajax({
-						  url: "http://demo-bsas.ddns.net:5000/api/alerta",
+						  url: host + "/api/alerta",
 						  
 						  context: document.body
 						});
 					});
+
+					/**** Aumentar / Disminuir intensidad ****/
+					$(".intensidad a").click(function(){
+						
+						//aumentar o disminuir						
+						var accion = this.id 
+						
+						$.ajax({
+						  url: host + "/api/luminaria/"+accion,
+						  
+						  context: document.body
+						});
+						
+					});
+
+
+					/***** Lapegue prende y apaga *****/
 
 					$("#apagarPrender").click(function(){
 						if ($(".estado").hasClass("prendida")){
@@ -380,17 +415,24 @@
 					function cambiarEstadoLed(accion){
 
 						$.ajax({
-						  url: "http://demo-bsas.ddns.net:5000/api/luminaria/"+accion,
+						  url: host + "/api/luminaria/"+accion,
 						  
 						  context: document.body
 						});
 					}
 
 
+					/**** Mover Camara ****/
+					$("ul.mover li").click(function(){
+						
+						var direccion = $(this).attr("class"); 
+						moverCamara(direccion);
+					});
+
 					function moverCamara(direccion){
 
 						$.ajax({
-						  url: "http://demo-bsas.ddns.net:5000/api/camara/mover/"+direccion,
+						  url: host + "/api/camara/mover/"+direccion,
 						  
 						  context: document.body
 						});
